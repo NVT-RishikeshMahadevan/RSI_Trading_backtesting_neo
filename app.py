@@ -7,9 +7,16 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 def load_data(ticker):
+    local_tickers = ['EURUSD', 'EURGBP', 'GBPUSD']  # List of tickers available locally
     base_url = "https://raw.githubusercontent.com/NVT-RishikeshMahadevan/Datasets_algotrading_freedata/refs/heads/rishi/"
-    return pd.read_csv(f"{base_url}{ticker}.csv")
-
+    
+    if ticker in local_tickers:
+        # Load data from local files
+        return pd.read_csv(r"C:\Users\rishi\Downloads\{ticker}.csv")  # Adjust path as needed
+    else:
+        # Load data from the online repository
+        return pd.read_csv(f"{base_url}{ticker}.csv")
+        
 def main():
     st.title("RSI Trading Strategy Dashboard")
     
@@ -17,7 +24,7 @@ def main():
     st.sidebar.header("Strategy Parameters")
     
     # Ticker selection
-    ticker_options = ['SPY', 'QQQ', 'META', 'AMZN', 'MSFT', 'NVDA']
+    ticker_options = ['SPY', 'QQQ', 'META', 'AMZN', 'MSFT', 'NVDA','EURUSD','EURGBP','GBPUSD']
     ticker = st.sidebar.selectbox("Select Ticker", ticker_options)
     
     # Strategy parameters
